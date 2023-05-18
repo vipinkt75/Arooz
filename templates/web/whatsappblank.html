@@ -1,0 +1,18 @@
+{% extends 'web/partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h5>{{status}}</h5>
+<h5 >{{link}}</h5>
+<input id="link" type="text" readonly value="{{link}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var link = $("#link").val()
+        window.location.href = link
+       
+    });
+</script>
+{% endblock %}

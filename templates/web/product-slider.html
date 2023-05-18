@@ -1,0 +1,583 @@
+{% extends 'web/partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="mobile-menu d-md-none d-block mobile-cart">
+    <ul>
+        <li class="active">
+            <a href="/">
+                <span class="material-symbols-outlined">
+                    home
+                </span>
+                <span>Home</span>
+            </a>
+        </li>
+
+        <li class="mobile-category">
+            <a href="javascript:void(0)">
+                <span class="material-symbols-outlined">
+                    category
+                </span>
+                <span>Category</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'user:search' %}" class="search-box">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+                <span>Search</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- mobile fix menu end -->
+
+<!-- Breadcrumb Section Start -->
+<section class="breadscrumb-section pt-0">
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadscrumb-contain">
+                    <h2>{{products.product}}</h2>
+                    <nav> 
+                        <!-- <ol class="breadcrumb mb-0">
+                                <li class=" breadcrumb-item">
+                                    <a href="/">
+                                        <i class="fa fa-2x fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+
+                                <li class="breadcrumb-item active">{{products.product}}</li>
+                            </ol> -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Product Slider Section Start -->
+<section class="wow fadeInUp">
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-12">
+                <div class="slider-3-product product-wrapper">
+                    <div>
+                        <div class="product-slider-image">
+                            <img src="{{products.image.url}}" alt="{{products.product}}" class="img-fluid blur-up lazyload" />
+                        </div>
+                    </div>
+                    {% if products.sub_image1 %}
+                    <div>
+                        <div class="product-slider-image">
+                            <img src="{{products.sub_image1.url}}" alt="{{products.product}}" class="img-fluid blur-up lazyload" />
+                        </div>
+                    </div>
+                    {% endif %} {% if products.sub_image2 %}
+                    <div>
+                        <div class="product-slider-image">
+                            <img src="{{products.sub_image2.url}}" alt="{{products.product}}" class="img-fluid blur-up lazyload" />
+                        </div>
+                    </div>
+                    {% endif %} {% if products.sub_image3 %}
+                    <div>
+                        <div class="product-slider-image">
+                            <img src="{{products.sub_image3.url}}" alt="{{products.product}}" class="img-fluid blur-up lazyload" />
+                        </div>
+                    </div>
+                    {% endif %} {% comment %}
+                    <div>
+                        <div class="product-slider-image">
+                            <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/category/2.jpg" alt="" class="img-fluid blur-up lazyload" />
+                        </div>
+                    </div>
+                    {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Slider Section End -->
+
+<!-- Product Left Sidebar Start -->
+<section class="product-section">
+    <div class="container-fluid-lg">
+        <div class="row">
+            <div class="col-xxl-12 col-xl-12 col-lg-12 wow fadeInUp">
+                <div class="row g-4">
+                    <div class="col-12 wow fadeInUp">
+                        <div class="right-box-contain">
+                            <h6 class="offer-top">{{percentage|floatformat:0}} %OFF</h6>
+                            <h2 class="name">{{products.product}}</h2>
+                            <div class="price-rating">
+                                <h3 class="theme-color price">Rs {{products.offer_price}}<del class="text-content">Rs {{products.price}}</del></h3>
+                                <label class="theme-color price" style="font-size: 15px;">Rental Security {{products.rentalsecurity}}</label>
+                            </div>
+
+                            <div class="procuct-contain">
+                                <p>{{products.description}}</p>
+                            </div>
+
+                            
+{% if products.measurements_needed %}
+<h5 class="offer-top" role="button" aria-expanded="false" aria-controls="collapseExample">Event date & Size Customization</h5>
+<div class="product-packege">
+    <ul>
+        <li>
+            <form action="{% url 'user:whatsapp' products.id %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-header" style="padding:15px">
+                    <label for="size">Shirt Size:</label>
+                    <select name="sizeoption">
+                        {% if products.get_sizesshirt %}
+                        {% for size in products.get_sizesshirt %}
+                        <option label="{{size}}" value="{{size}}">{{products.get_sizesshirt}}</option>
+                        {% endfor %} {% endif %}
+                    </select>
+                </div>
+                <div class="modal-header" style="padding:15px">
+                    <label for="size">Pant Size:</label>
+                    <select name="sizeoption">
+                        {% if products.get_sizespant %}
+                        {% for size in products.get_sizespant %}
+                        <option label="{{size}}" value="{{size}}">{{products.get_sizespant}}</option>
+                        {% endfor %} {% endif %}
+                    </select>
+                </div>
+
+                <div style="border: 1px solid #ced4da;
+                padding: 21px;">
+                    {% comment %}
+                    <form action="{% url 'user:measurements' products.id %}" method="POST">
+                        {% csrf_token %} {% endcomment %}
+
+                        
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Trouser Measurements (optional)</h4>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="landmark">Length</label>
+                                <input type="text" class="form-control" id="Length" name="Length" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="landmark">Hip</label>
+                                <input type="text" class="form-control" id="Hip" name="Hip" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="landmark">Waist</label>
+                                <input type="text" class="form-control" id="Waist" name="Waist" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="landmark">Thighs</label>
+                                <input type="text" class="form-control" id="Thighs" name="Thighs" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="landmark">Hem</label>
+                                <input type="text" class="form-control" id="Hem" name="Hem" />
+                            </div>
+                           
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">{% comment %} <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button> {% endcomment %}</div>
+
+                        
+                </div>
+
+                <div class="product-title">
+                    <h4>1 Event= 3 Days Rent</h4>
+                </div>
+                <div class="product-title">
+                    <h4>Event Date</h4>
+                </div>
+                <input type="date" id="eventdate" name="eventdate" required />
+                {% if messages %} {% for message in messages %}
+                <div class="alert alert-info">
+                    {{message}}
+                </div>
+                {% endfor %} {% endif %}
+                <div class="py-5">
+                    {% comment %} <button class="btn-md bg-dark cart-button text-white w-50" type="submit">Order now</button> {% endcomment %}
+                    <a class="btn-md bg-dark cart-button text-white w-50" onclick="addrForm()">Oredr Now<span></span></a>
+                </div>
+
+
+                <div class="col-md-12  col-lg-6 col-12  sm-padding adrsform" id="order-form-box">
+                    <div class="product-details">
+                        <div class="product-info text-end">
+                            <div class="footer-widget booking-form booking-form-2">
+                                <h3>Place Your Order<span></span></h3>
+                                
+                                   
+                                    <div class="booking-form-group">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="form-padding">
+                                                    <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="form-padding">
+                                                    <input class="form-control" type="text" id="number" name="number" placeholder="Contact Number" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-md bg-dark cart-button text-white w-50" type="submit">Order now</button>
+                                    <div id="b-form-messages" class="alert" role="alert"></div>
+                               
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                {% comment %} <div class="note-box product-packege">
+                    <button class="btn-md bg-dark cart-button text-white w-50" type="submit">Order now</button>
+                </div> {% endcomment %}
+
+                {% comment %} <button type="submit" class="btn btn-primary">Save The Details</button> {% endcomment %}
+            </form>
+            {% comment %} <div class="text-success py-0 px-5">Or </div>
+            <a href="{% url 'user:addtocart' products.id %}" class="py-5">
+                <button class="btn-md cart-button w-50">Add To Cart</button>
+            </a>  {% endcomment %}
+        </li>
+    </ul>
+</div>
+
+{% else %}
+
+<a class="btn-md bg-dark cart-button text-white w-50" onclick="addrForm()">Oredr Now<span></span></a>
+<div class="col-md-12  col-lg-6 col-12  sm-padding adrsform" id="order-form-box">
+    <div class="product-details">
+        <div class="product-info p-3">
+            <div>
+                <h5 class="text-success">Place Your Order<span></span></h5>
+                
+                <form action="{% url 'user:whatsapp' products.id %}" method="POST">
+                    <div class="booking-form-group">
+                        <div class="row">
+
+                            <div class="product-title">
+                                <label for="size" class="text-danger">Choose Size:</label>
+                                <select name="sizeoption" class="form-control">
+                                    {% if products.get_sizesshirt %}
+                                    {% for size in products.get_sizesshirt %}
+                                    <option label="{{size}}" value="{{size}}">{{products.get_sizesshirt}}</option>
+                                    {% endfor %} {% endif %}
+                                </select>
+                            </div>
+
+                            <div class="product-title">
+                                <label class="text-danger">1 Event= 3 Days Rent</label>
+                            </div>
+                           
+                                
+                            
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-padding">
+                                    <input type="date" id="eventdate" name="eventdate" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-padding">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Your Name" required>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-padding">
+                                    <input class="form-control" type="text" id="number" name="number" placeholder="Contact Number" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-md bg-dark cart-button text-white w-50" type="submit">Order now</button>
+                    <div id="b-form-messages" class="alert" role="alert"></div>
+                    
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+{% endif %}
+                            {% comment %}
+                            <div class="note-box product-packege">
+                                <button class="btn-md bg-dark cart-button text-white w-50" onclick="sentWhatsapp({{products.id}})">Order now</button>
+                            </div>
+                            {% endcomment %}
+
+                            <div class="pickup-box">
+                                <div class="product-title">
+                                    <h4>Discription</h4>
+                                </div>
+
+                                <div class="pickup-detail">
+                                    <h4 class="text-content">{{products.description}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 wow fadeInUp">
+                    <div class="product-section-box">
+                        <div class="tab-content custom-tab">
+                            <div class="tab-pane fade show active" aria-labelledby="description-tab">
+                                <div class="product-description">
+                                    <div class="banner-contain nav-desh">
+                                        <img src="{% static 'web/images_new/Banner5-01.jpg' %}" class="bg-img blur-up lazyload" alt="" />
+                                        <div class="banner-details p-center banner-b-space w-100 text-center">
+                                            <div>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Left Sidebar End -->
+
+<!-- Releted Product Section Start -->
+<section class="product-list-section section-b-space">
+    <div class="container-fluid-lg col-lg-12">
+        <div class="title">
+            <h2>Related Products</h2>
+            <span class="title-leaf">
+                <svg class="icon-width">
+                    <use xlink:href="https://themes.pixelstrap.com/fastkart/assets/svg/leaf.svg#leaf"></use>
+                </svg>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="slider-6_1 product-wrapper">
+                    {% for related in subcategory.get_products %}
+                    <div>
+                        <div class="product-box-3 wow fadeInUp">
+                            <div class="product-header">
+                                <div class="product-image">
+                                    <a href="{% url 'user:product' related.id %}">
+                                        <img src="{{related.image.url}}" class="img-fluid blur-up lazyload" alt="" />
+                                    </a>
+
+                                    <ul class="product-option">
+                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                            <a href="{% url 'user:product' related.id %}" data-bs-toggle="modal" data-bs-target="#view">
+                                                <i data-feather="eye"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="product-footer">
+                                <div class="product-detail">
+                                    <span class="span-name">{{related.subcategory}}</span>
+                                    <a href="product-left-thumbnail.html">
+                                        <h5 class="name">{{related.product}}</h5>
+                                    </a>
+                                    
+                                    <h6 class="unit"></h6>
+                                    <h5 class="price"><span class="theme-color">Rs {{related.price}}</span> <del>Rs {{related.offer_price}}</del></h5>
+                                    {% comment %}
+                                    <div class="add-to-cart-box bg-white">
+                                        {% if related.quantity > 0%}
+                                        <button class="btn btn-add-cart addcart-button">
+                                            Add
+                                            <span class="add-icon bg-light-gray">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </span>
+                                        </button>
+                                        {% else%}
+                                        <span class="bg-light-gray">
+                                            Out Of Stock
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                    {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Releted Product Section End -->
+
+<!-- Footer Section Start -->
+<!-- Modal -->
+
+
+
+
+
+
+<!-- The Modal -->
+{% comment %} <div class="modal" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+            <form action="{% url 'user:whatsapp' products.id %}" method="POST">
+                {% csrf_token %}
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Shirt Measurements</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+              
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="landmark">Sleeve length</label>
+                        <input type="text" class="form-control" id="sleevelength" name="sleevelength" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Chest around</label>
+                        <input type="text" class="form-control" id="chestaround" name="chestaround" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Waist Around</label>
+                        <input type="text" class="form-control" id="waistAround" name="waistAround" />
+                    </div>
+                </div>
+
+                
+                <div class="modal-header">
+                    <h4 class="modal-title">Trouser Measurements</h4>
+                </div>
+
+               
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="landmark">Length</label>
+                        <input type="text" class="form-control" id="Length" name="Length" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Hip</label>
+                        <input type="text" class="form-control" id="Hip" name="Hip" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Waist</label>
+                        <input type="text" class="form-control" id="Waist" name="Waist" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Thighs</label>
+                        <input type="text" class="form-control" id="Thighs" name="Thighs" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="landmark">Hem</label>
+                        <input type="text" class="form-control" id="Hem" name="Hem" />
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Custome</button>
+                    </div>
+                </div>
+
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button></div>
+            </form>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+
+
+
+
+
+<!-- Bg overlay Start -->
+<div class="bg-overlay"></div>
+    <!-- Bg overlay End -->
+    
+   
+        {% comment %} model {% endcomment %}
+
+
+    <div class="modal fade" id="exampleModal">
+    
+                
+        <form method="POST" id="" class="form-horizontal">
+            {% csrf_token %}
+            <div class="booking-form-group">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="form-padding">
+                            <input type="text" id="name" name="name" class="form-control" placeholder="اسمك" required>
+                        </div>
+                    </div>
+                   
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="form-padding">
+                            <input class="form-control" type="text" id="time" name="time" placeholder="الوقت المتوقع" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="b_submit " type="submit" class="book-btn d-flex" type="submit">إرسال</button>
+            <div id="b-form-messages" class="alert" role="alert"></div>
+        </form>
+    
+    </div>
+    
+
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+
+
+
+
+<script>
+    $("#order-form-box").hide()
+</script>
+<script>
+    function addrForm(){
+        $("#order-form-box").show()
+
+    } 
+</script>
+{% endblock %}
